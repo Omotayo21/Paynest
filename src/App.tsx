@@ -1,72 +1,99 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
-  ShoppingBag, 
-  BarChart3, 
-  Truck, 
+  ShieldCheck, 
   Zap, 
+  Lock, 
+  CreditCard, 
   ArrowRight, 
   CheckCircle2, 
-  Globe, 
+  Globe2, 
   Smartphone,
   Menu,
+  X,
+  Layers,
+  BarChart4,
+  Cpu,
+  RefreshCcw,
   Mail,
   Phone,
   MapPin,
-  X,
-  Package,
   TrendingUp,
   Users,
-  Shield,
-  Clock,
-  HeadphonesIcon
+  Building2,
+  Code2,
+  Wallet,
+  LineChart
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { scrollY } = useScroll();
+  const backgroundColor = useTransform(
+    scrollY,
+    [0, 100],
+    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.95)']
+  );
 
   return (
-    <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-mercato-600 p-2 rounded-lg">
-              <ShoppingBag className="h-6 w-6 text-white" />
+    <motion.nav 
+      style={{ backgroundColor }}
+      className="fixed w-full z-50 backdrop-blur-lg border-b border-blue-100/20"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-24">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <motion.div 
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6 }}
+              className="bg-blue-600 p-3 rounded-2xl shadow-lg"
+            >
+              <ShieldCheck className="h-8 w-8 text-white" />
+            </motion.div>
+            <div>
+              <span className="text-3xl font-black text-gray-900 tracking-tighter">PayNest</span>
+              <p className="text-xs text-blue-600 font-bold uppercase tracking-widest">Systems</p>
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">MercatoHub</span>
           </Link>
           
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/features" className="text-sm font-medium text-gray-600 hover:text-mercato-600 transition-colors">Features</Link>
-            <Link to="/solutions" className="text-sm font-medium text-gray-600 hover:text-mercato-600 transition-colors">Solutions</Link>
-            <Link to="/about" className="text-sm font-medium text-gray-600 hover:text-mercato-600 transition-colors">About</Link>
-            <Link to="/get-started" className="bg-mercato-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-mercato-700 transition-all shadow-md hover:shadow-lg">
-              Get Started
+          <div className="hidden lg:flex items-center space-x-12">
+            <Link to="/features" className="text-sm font-bold text-gray-700 hover:text-blue-600 transition-colors relative group">
+              Features
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+            </Link>
+            <Link to="/solutions" className="text-sm font-bold text-gray-700 hover:text-blue-600 transition-colors relative group">
+              Solutions
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+            </Link>
+            <Link to="/about" className="text-sm font-bold text-gray-700 hover:text-blue-600 transition-colors relative group">
+              About
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+            </Link>
+            <Link to="/get-started" className="bg-blue-600 text-white px-8 py-3.5 rounded-full text-sm font-black hover:shadow-2xl hover:shadow-blue-500/50 transition-all hover:scale-105">
+              Open Account →
             </Link>
           </div>
 
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 p-2">
-              {isOpen ? <X /> : <Menu />}
-            </button>
-          </div>
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-gray-900 p-2">
+            {isOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
+          </button>
         </div>
       </div>
 
       {isOpen && (
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-white border-b border-gray-100 px-4 py-4 space-y-4"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="lg:hidden bg-white border-t border-gray-100 px-6 py-8 space-y-6"
         >
-          <Link to="/features" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Features</Link>
-          <Link to="/solutions" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Solutions</Link>
-          <Link to="/about" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>About</Link>
-          <Link to="/get-started" className="block w-full bg-mercato-600 text-white py-3 rounded-xl font-semibold text-center" onClick={() => setIsOpen(false)}>Get Started</Link>
+          <Link to="/features" className="block text-gray-700 font-bold text-lg" onClick={() => setIsOpen(false)}>Features</Link>
+          <Link to="/solutions" className="block text-gray-700 font-bold text-lg" onClick={() => setIsOpen(false)}>Solutions</Link>
+          <Link to="/about" className="block text-gray-700 font-bold text-lg" onClick={() => setIsOpen(false)}>About</Link>
+          <Link to="/get-started" className="block w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-center text-lg shadow-xl" onClick={() => setIsOpen(false)}>Open Account</Link>
         </motion.div>
       )}
-    </nav>
+    </motion.nav>
   );
 };
 
@@ -74,67 +101,111 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-2 gap-12 items-center">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-blue-50">
+      {/* Animated background grid */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `linear-gradient(to right, rgb(59 130 246 / 0.1) 1px, transparent 1px),
+                           linear-gradient(to bottom, rgb(59 130 246 / 0.1) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}></div>
+      </div>
+
+      {/* Floating orbs */}
+      <motion.div 
+        animate={{ 
+          y: [0, -30, 0],
+          x: [0, 20, 0]
+        }}
+        transition={{ duration: 8, repeat: Infinity }}
+        className="absolute top-20 right-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"
+      ></motion.div>
+      <motion.div 
+        animate={{ 
+          y: [0, 30, 0],
+          x: [0, -20, 0]
+        }}
+        transition={{ duration: 10, repeat: Infinity }}
+        className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl"
+      ></motion.div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 py-32">
+        <div className="text-center max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="inline-flex items-center space-x-3 bg-white/80 backdrop-blur-sm border border-blue-200 px-6 py-3 rounded-full mb-10 shadow-lg"
           >
-            <div className="inline-flex items-center space-x-2 bg-mercato-50 border border-mercato-100 px-3 py-1 rounded-full mb-6">
-              <Zap className="h-4 w-4 text-mercato-600" />
-              <span className="text-xs font-bold text-mercato-700 uppercase tracking-wider">Fastest Growing Retail Platform</span>
+            <div className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
             </div>
-            <h1 className="text-5xl lg:text-7xl font-extrabold text-gray-900 leading-tight mb-6">
-              Modern Retail <br />
-              <span className="text-mercato-600">Built for Growth</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-lg leading-relaxed">
-              Empower your business with seamless inventory management, 
-              omnichannel sales, and real-time analytics designed for the modern African retailer.
-            </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <button 
-                onClick={() => navigate('/get-started')}
-                className="bg-mercato-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-mercato-700 transition-all shadow-xl hover:shadow-mercato-200/50 flex items-center justify-center"
-              >
-                Start Selling Now <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
-            </div>
-            <div className="mt-10 flex items-center space-x-4">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                    <img src={`https://i.pravatar.cc/150?u=${i}`} alt="user" />
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-500 font-medium">Joined by 2,000+ vendors this month</p>
-            </div>
+            <span className="text-sm font-black uppercase tracking-[0.2em] text-blue-900">Powering Africa's Payment Future</span>
           </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mt-12 lg:mt-0 relative"
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-5xl lg:text-8xl font-black text-gray-900 leading-[1.05] mb-8"
           >
-            <div className="relative bg-gradient-to-tr from-mercato-600 to-green-400 rounded-3xl p-1 shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=1200" 
-                alt="MercatoHub Dashboard" 
-                className="rounded-3xl shadow-inner w-full h-[500px] object-cover"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-[200px]">
-                <div className="flex items-center space-x-3 mb-2">
-                  <div className="bg-green-100 p-2 rounded-lg">
-                    <BarChart3 className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="font-bold text-gray-900">+124%</span>
-                </div>
-                <p className="text-xs text-gray-500 font-medium">Growth in sales volume since migration</p>
-              </div>
+            Payment Infrastructure
+            <br />
+            <span className="text-blue-600">
+              Built for Scale
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed font-medium"
+          >
+            Process millions of transactions with <span className="font-bold text-blue-600">99.99% uptime</span>. 
+            PCI-DSS compliant infrastructure trusted by Kenya's leading financial institutions.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          >
+            <button 
+              onClick={() => navigate('/get-started')}
+              className="group bg-blue-600 text-white px-12 py-6 rounded-2xl font-black text-xl hover:shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center space-x-3 hover:scale-105"
+            >
+              <span>Start Integration</span>
+              <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+            </button>
+            <Link 
+              to="/features"
+              className="group bg-white text-blue-600 px-12 py-6 rounded-2xl font-black text-xl border-2 border-blue-600 hover:bg-blue-50 transition-all flex items-center space-x-3"
+            >
+              <span>View Documentation</span>
+              <Code2 className="h-6 w-6" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mt-16 flex items-center justify-center space-x-12 text-sm"
+          >
+            <div className="flex items-center space-x-3">
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
+              <span className="font-bold text-gray-700">500+ Institutions</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
+              <span className="font-bold text-gray-700">$2B+ Processed</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
+              <span className="font-bold text-gray-700">40+ Countries</span>
             </div>
           </motion.div>
         </div>
@@ -143,60 +214,168 @@ const Hero = () => {
   );
 };
 
-const FeaturesPreview = () => {
-  const list = [
+const StatsSection = () => {
+  const stats = [
+    { value: "99.99%", label: "Uptime SLA", icon: <Zap className="h-8 w-8" /> },
+    { value: "<200ms", label: "Avg Response", icon: <TrendingUp className="h-8 w-8" /> },
+    { value: "10K+", label: "TPS Capacity", icon: <BarChart4 className="h-8 w-8" /> },
+    { value: "24/7", label: "Support", icon: <Users className="h-8 w-8" /> }
+  ];
+
+  return (
+    <section className="py-24 bg-blue-900 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-black text-white mb-4">Enterprise-Grade Performance</h2>
+          <p className="text-xl text-blue-200 font-semibold">Numbers that matter to your business</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 text-center hover:bg-white/20 transition-all group"
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500/20 rounded-2xl mb-6 text-blue-300 group-hover:scale-110 transition-transform">
+                {stat.icon}
+              </div>
+              <div className="text-5xl font-black text-white mb-2">{stat.value}</div>
+              <div className="text-blue-200 font-bold uppercase tracking-widest text-sm">{stat.label}</div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FeaturesGrid = () => {
+  const features = [
     {
-      title: "Omnichannel Selling",
-      desc: "Sell online, in-store, and on social media with a unified dashboard.",
-      icon: <Globe className="h-6 w-6" />,
+      icon: <Cpu className="h-10 w-10" />,
+      title: "Distributed Architecture",
+      desc: "Multi-region deployment across GCP and AWS for maximum reliability and low latency.",
       color: "bg-blue-500"
     },
     {
-      title: "Smart Inventory",
-      desc: "Real-time tracking and automated restock alerts for all your products.",
-      icon: <CheckCircle2 className="h-6 w-6" />,
-      color: "bg-mercato-500"
+      icon: <Lock className="h-10 w-10" />,
+      title: "Bank-Level Security",
+      desc: "PCI-DSS Level 1 certified with end-to-end encryption and tokenization.",
+      color: "bg-blue-700"
     },
     {
-      title: "Next-Day Delivery",
-      desc: "Built-in logistics network to get your products to customers faster.",
-      icon: <Truck className="h-6 w-6" />,
-      color: "bg-orange-500"
+      icon: <Globe2 className="h-10 w-10" />,
+      title: "Multi-Currency Support",
+      desc: "Accept and disburse in 40+ currencies with real-time FX conversion.",
+      color: "bg-blue-400"
     },
     {
-      title: "Mobile POS",
-      desc: "Turn your phone into a powerful point of sale system anywhere.",
-      icon: <Smartphone className="h-6 w-6" />,
-      color: "bg-purple-500"
+      icon: <Layers className="h-10 w-10" />,
+      title: "Unified API",
+      desc: "One integration for cards, mobile money, bank transfers, and wallets.",
+      color: "bg-blue-600"
+    },
+    {
+      icon: <RefreshCcw className="h-10 w-10" />,
+      title: "Auto Reconciliation",
+      desc: "Real-time settlement matching and automated ledger management.",
+      color: "bg-blue-800"
+    },
+    {
+      icon: <BarChart4 className="h-10 w-10" />,
+      title: "Advanced Analytics",
+      desc: "Deep insights into transaction flows, success rates, and customer behavior.",
+      color: "bg-blue-950"
     }
   ];
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-mercato-600 font-bold uppercase tracking-widest text-sm mb-4">Why MercatoHub?</h2>
-          <p className="text-4xl font-extrabold text-gray-900 mb-6">Built for the next generation of commerce</p>
-          <div className="w-20 h-1.5 bg-mercato-600 mx-auto rounded-full"></div>
+    <section className="py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-blue-600 font-black uppercase tracking-[0.3em] text-sm">Platform Features</span>
+            <h2 className="text-6xl font-black text-gray-900 mt-4 mb-6">Built for Modern Finance</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Everything you need to accept, process, and manage payments at scale
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {list.map((item, idx) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ y: -10 }}
-              className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 transition-all hover:shadow-xl group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              className="group relative bg-blue-50 border-2 border-gray-100 rounded-3xl p-10 hover:border-blue-300 transition-all hover:shadow-2xl hover:shadow-blue-500/10"
             >
-              <div className={`${item.color} w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform`}>
-                {item.icon}
+              <div className={`inline-flex items-center justify-center w-20 h-20 ${feature.color} rounded-2xl mb-6 text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                {feature.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
-              <p className="text-gray-500 leading-relaxed font-medium">
-                {item.desc}
-              </p>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed font-semibold">{feature.desc}</p>
             </motion.div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+};
+
+const CTASection = () => {
+  return (
+    <section className="py-32 bg-blue-950 relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-6xl lg:text-7xl font-black text-white mb-8 leading-tight">
+            Ready to Transform Your Payment Infrastructure?
+          </h2>
+          <p className="text-2xl text-blue-200 mb-12 font-semibold max-w-3xl mx-auto">
+            Join 500+ financial institutions processing billions in transactions every month.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Link 
+              to="/get-started"
+              className="bg-white text-blue-900 px-14 py-7 rounded-2xl font-black text-2xl hover:shadow-2xl transition-all hover:scale-105 inline-flex items-center space-x-3"
+            >
+              <span>Open Account</span>
+              <ArrowRight className="h-7 w-7" />
+            </Link>
+            <Link 
+              to="/contact"
+              className="bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-14 py-7 rounded-2xl font-black text-2xl hover:bg-white/20 transition-all inline-flex items-center space-x-3"
+            >
+              <span>Talk to Sales</span>
+              <Phone className="h-7 w-7" />
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -204,50 +383,64 @@ const FeaturesPreview = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-gray-950 text-white pt-24 pb-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-20">
           <div className="col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-6">
-              <div className="bg-mercato-600 p-2 rounded-lg">
-                <ShoppingBag className="h-6 w-6 text-white" />
+            <div className="flex items-center space-x-3 mb-8">
+              <div className="bg-blue-600 p-3 rounded-2xl">
+                <ShieldCheck className="h-8 w-8 text-white" />
               </div>
-              <span className="text-2xl font-bold tracking-tight">MercatoHub</span>
-            </Link>
-            <p className="text-gray-400 max-w-sm mb-6 leading-relaxed">
-              Empowering the next generation of African retailers with scalable, 
-              secure, and innovative technology solutions.
+              <div>
+                <span className="text-3xl font-black tracking-tighter">PayNest</span>
+                <p className="text-xs text-blue-400 font-bold uppercase tracking-widest">Systems</p>
+              </div>
+            </div>
+            <p className="text-gray-400 max-w-sm mb-8 text-lg leading-relaxed font-semibold">
+              Enterprise payment infrastructure for Africa's digital economy.
             </p>
             <div className="flex space-x-4">
-              {['Twitter', 'Instagram', 'LinkedIn'].map((app) => (
-                <div key={app} className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-mercato-600 cursor-pointer transition-colors text-sm font-bold">
-                  {app[0]}
+              {['T', 'L', 'G'].map((letter) => (
+                <div key={letter} className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-600 cursor-pointer transition-all font-black text-lg">
+                  {letter}
                 </div>
               ))}
             </div>
           </div>
+          
           <div>
-            <h4 className="font-bold mb-6">Platform</h4>
-            <ul className="space-y-4 text-gray-400 font-medium">
-              <li><Link to="/features" className="hover:text-mercato-400 transition-colors">Features</Link></li>
-              <li><Link to="/solutions" className="hover:text-mercato-400 transition-colors">Solutions</Link></li>
-              <li><Link to="/get-started" className="hover:text-mercato-400 transition-colors">Pricing</Link></li>
+            <h4 className="font-black text-lg mb-6 uppercase tracking-wider">Product</h4>
+            <ul className="space-y-4 text-gray-400 font-bold">
+              <li><Link to="/features" className="hover:text-blue-400 transition-colors">Payment Gateway</Link></li>
+              <li><Link to="/features" className="hover:text-blue-400 transition-colors">API Platform</Link></li>
+              <li><Link to="/solutions" className="hover:text-blue-400 transition-colors">Compliance</Link></li>
             </ul>
           </div>
+          
           <div>
-            <h4 className="font-bold mb-6">Company</h4>
-            <ul className="space-y-4 text-gray-400 font-medium">
-              <li><Link to="/about" className="hover:text-mercato-400 transition-colors">About Us</Link></li>
-              <li><Link to="/privacy" className="hover:text-mercato-400 transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/contact" className="hover:text-mercato-400 transition-colors">Contact</Link></li>
+            <h4 className="font-black text-lg mb-6 uppercase tracking-wider">Solutions</h4>
+            <ul className="space-y-4 text-gray-400 font-bold">
+              <li><Link to="/solutions" className="hover:text-blue-400 transition-colors">For Merchants</Link></li>
+              <li><Link to="/solutions" className="hover:text-blue-400 transition-colors">For Developers</Link></li>
+              <li><Link to="/solutions" className="hover:text-blue-400 transition-colors">For Enterprises</Link></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="font-black text-lg mb-6 uppercase tracking-wider">Company</h4>
+            <ul className="space-y-4 text-gray-400 font-bold">
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact</Link></li>
+              <li><Link to="/privacy" className="hover:text-blue-400 transition-colors">Privacy</Link></li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-800 pt-10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm text-gray-500 font-medium">
-          <p>© 2026 MercatoHub Systems. All rights reserved.</p>
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span>System Status: Fully Operational</span>
+        
+        <div className="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+          <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">© 2026 PayNest Systems Kenya</p>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-gray-400 text-sm font-bold">All Systems Operational</span>
           </div>
         </div>
       </div>
@@ -255,355 +448,32 @@ const Footer = () => {
   );
 };
 
-// Home Page
-const HomePage = () => {
-  return (
-    <>
-      <Hero />
-      <FeaturesPreview />
-      
-      {/* Testimonial Section */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-mercato-900 rounded-[3rem] p-12 lg:p-20 relative overflow-hidden">
-            <div className="relative z-10 lg:grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <CheckCircle2 className="h-12 w-12 text-mercato-400 mb-8" />
-                <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
-                  "Our infrastructure is now predictable, scalable, and far easier to manage. 
-                  Sales events are no longer a risk."
-                </h2>
-                <div className="flex items-center space-x-4">
-                  <div className="h-14 w-14 rounded-full bg-gray-700 overflow-hidden border-2 border-mercato-500">
-                  
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-lg">Fatima Adebayo</p>
-                    <p className="text-mercato-400 font-medium">CTO, MercatoHub Nigeria</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-12 lg:mt-0 opacity-20 lg:opacity-100 flex justify-center">
-                <ShoppingBag className="text-white h-[300px] w-[300px]" />
-              </div>
-            </div>
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mercato-800 rounded-full blur-[100px] -mr-64 -mt-64"></div>
-            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-green-800 rounded-full blur-[80px] -ml-32 -mb-32"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl font-extrabold text-gray-900 mb-8 tracking-tight">Ready to scale your business?</h2>
-          <p className="text-xl text-gray-500 mb-12 font-medium">
-            Join thousands of successful merchants across Nigeria who trust MercatoHub 
-            to power their business growth every single day.
-          </p>
-          <Link to="/get-started" className="inline-block bg-mercato-600 text-white px-10 py-5 rounded-3xl font-bold text-xl hover:bg-mercato-700 transition-all shadow-2xl hover:shadow-mercato-300/50">
-            Create Your Free Account
-          </Link>
-        </div>
-      </section>
-    </>
-  );
-};
-
-// Features Page
+// Subpages
 const FeaturesPage = () => {
-  const features = [
-    {
-      icon: <Package className="h-8 w-8" />,
-      title: "Inventory Management",
-      desc: "Track stock levels in real-time across all locations. Get automated alerts when items run low and manage suppliers efficiently.",
-      color: "bg-blue-500"
-    },
-    {
-      icon: <Globe className="h-8 w-8" />,
-      title: "Omnichannel Commerce",
-      desc: "Sell seamlessly across online stores, physical locations, and social media platforms from one unified dashboard.",
-      color: "bg-purple-500"
-    },
-    {
-      icon: <BarChart3 className="h-8 w-8" />,
-      title: "Advanced Analytics",
-      desc: "Make data-driven decisions with comprehensive reports on sales, customer behavior, and inventory performance.",
-      color: "bg-green-500"
-    },
-    {
-      icon: <Smartphone className="h-8 w-8" />,
-      title: "Mobile POS",
-      desc: "Accept payments anywhere with our mobile point-of-sale system. Works offline and syncs when connected.",
-      color: "bg-orange-500"
-    },
-    {
-      icon: <Truck className="h-8 w-8" />,
-      title: "Logistics Integration",
-      desc: "Connect with major delivery partners for seamless order fulfillment and real-time tracking.",
-      color: "bg-red-500"
-    },
-    {
-      icon: <Shield className="h-8 w-8" />,
-      title: "Secure Payments",
-      desc: "Accept all major payment methods with bank-level security and fraud protection built-in.",
-      color: "bg-indigo-500"
-    }
+  const items = [
+    { icon: <Cpu />, title: "Transaction Engine", desc: "Distributed processing engine handling millions of operations with zero room for error." },
+    { icon: <Layers />, title: "Unified API", desc: "Single integration for cards, mobile money, bank transfers across multiple regions." },
+    { icon: <BarChart4 />, title: "Real-time Analytics", desc: "Deep visibility into payment flows, success rates, and customer behavior." },
+    { icon: <ShieldCheck />, title: "Fraud Detection", desc: "ML-powered fraud prevention protecting your business and customers." },
+    { icon: <RefreshCcw />, title: "Auto Reconciliation", desc: "Automated ledger matching saving hundreds of man-hours monthly." },
+    { icon: <CreditCard />, title: "Virtual Cards", desc: "Issue local and international virtual cards for customers or corporate use." }
   ];
 
   return (
-    <div className="pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">Powerful Features for Modern Retail</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Everything you need to run and grow your retail business, all in one platform.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all"
-            >
-              <div className={`${feature.color} w-16 h-16 rounded-xl flex items-center justify-center text-white mb-6`}>
-                {feature.icon}
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
-            </motion.div>
-          ))}
+    <div className="pt-32 pb-24 bg-blue-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <h1 className="text-6xl lg:text-7xl font-black text-gray-900 mb-6">Platform Features</h1>
+          <p className="text-2xl text-gray-600 max-w-3xl mx-auto">Enterprise-grade tools for businesses that can't afford downtime</p>
         </div>
-      </div>
-    </div>
-  );
-};
-
-// Solutions Page
-const SolutionsPage = () => {
-  const solutions = [
-    {
-      title: "For Small Retailers",
-      desc: "Start selling online in minutes with our easy-to-use platform. No technical knowledge required.",
-      features: ["Quick setup", "Affordable pricing", "24/7 support", "Mobile app included"]
-    },
-    {
-      title: "For Growing Businesses",
-      desc: "Scale your operations with advanced features and multi-location support.",
-      features: ["Multi-store management", "Advanced analytics", "API access", "Priority support"]
-    },
-    {
-      title: "For Enterprises",
-      desc: "Custom solutions tailored to your specific business needs and workflows.",
-      features: ["Custom integrations", "Dedicated account manager", "SLA guarantee", "White-label options"]
-    }
-  ];
-
-  return (
-    <div className="pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">Solutions for Every Business Size</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Whether you're just starting out or managing multiple locations, we have the right solution for you.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {solutions.map((solution, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.2 }}
-              className="bg-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 hover:border-mercato-500 transition-all"
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{solution.title}</h3>
-              <p className="text-gray-600 mb-6">{solution.desc}</p>
-              <ul className="space-y-3">
-                {solution.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-gray-700">
-                    <CheckCircle2 className="h-5 w-5 text-mercato-600 mr-3" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// About Page
-const AboutPage = () => {
-  return (
-    <div className="pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">About MercatoHub</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We're on a mission to empower African retailers with world-class technology.
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              Founded in 2020, MercatoHub was born from a simple observation: African retailers needed better tools to compete in the digital age. Our founders, having worked with retailers across Nigeria, Kenya, and South Africa, saw firsthand the challenges businesses faced with outdated systems and expensive solutions.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Today, we serve over 2,000 businesses across the continent, processing millions of transactions monthly and helping retailers grow their revenue by an average of 124%.
-            </p>
-          </div>
-          <div className="bg-mercato-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Values</h3>
-            <div className="space-y-4">
-              {[
-                { icon: <Users />, title: "Customer First", desc: "Every decision starts with our customers' needs" },
-                { icon: <TrendingUp />, title: "Innovation", desc: "Constantly improving and adapting to market changes" },
-                { icon: <Shield />, title: "Reliability", desc: "Building systems you can depend on 24/7" }
-              ].map((value, idx) => (
-                <div key={idx} className="flex items-start space-x-4">
-                  <div className="bg-mercato-600 p-2 rounded-lg text-white flex-shrink-0">
-                    {value.icon}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">{value.title}</h4>
-                    <p className="text-gray-600 text-sm">{value.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Get Started Page
-const GetStartedPage = () => {
-  const [formData, setFormData] = useState({
-    businessName: '',
-    email: '',
-    phone: '',
-    businessType: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Thank you for your interest! Our team will contact you within 24 hours.');
-  };
-
-  return (
-    <div className="pt-24 pb-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">Get Started with MercatoHub</h1>
-          <p className="text-xl text-gray-600">
-            Fill out the form below and our team will set up your account within 24 hours.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100"
-        >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Business Name *</label>
-              <input
-                type="text"
-                required
-                value={formData.businessName}
-                onChange={(e) => setFormData({...formData, businessName: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mercato-500 focus:border-transparent"
-                placeholder="Your Business Name"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Email Address *</label>
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mercato-500 focus:border-transparent"
-                placeholder="you@business.com"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number *</label>
-              <input
-                type="tel"
-                required
-                value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mercato-500 focus:border-transparent"
-                placeholder="+234 XXX XXX XXXX"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Business Type *</label>
-              <select
-                required
-                value={formData.businessType}
-                onChange={(e) => setFormData({...formData, businessType: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mercato-500 focus:border-transparent"
-              >
-                <option value="">Select business type</option>
-                <option value="retail">Retail Store</option>
-                <option value="ecommerce">E-commerce</option>
-                <option value="wholesale">Wholesale</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-mercato-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-mercato-700 transition-all shadow-lg"
-            >
-              Create My Account
-            </button>
-          </form>
-        </motion.div>
-
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {[
-            { icon: <Clock />, title: "Quick Setup", desc: "Get started in under 5 minutes" },
-            { icon: <HeadphonesIcon />, title: "Free Support", desc: "24/7 customer support included" },
-            { icon: <CheckCircle2 />, title: "No Credit Card", desc: "Try free for 14 days" }
-          ].map((item, idx) => (
-            <div key={idx} className="text-center">
-              <div className="bg-mercato-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-mercato-600">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {items.map((item, idx) => (
+            <div key={idx} className="bg-white p-10 rounded-3xl border-2 border-gray-100 shadow-lg hover:shadow-2xl hover:border-blue-300 transition-all">
+              <div className="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-6">
                 {item.icon}
               </div>
-              <h3 className="font-bold text-gray-900 mb-1">{item.title}</h3>
-              <p className="text-sm text-gray-600">{item.desc}</p>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">{item.title}</h3>
+              <p className="text-gray-600 font-semibold leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -612,66 +482,170 @@ const GetStartedPage = () => {
   );
 };
 
-// Simple pages
-const PrivacyPage = () => (
-  <div className="pt-24 pb-20">
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
-      <div className="prose prose-lg">
-        <p className="text-gray-600 mb-4">Last updated: January 2026</p>
-        <p className="text-gray-600 leading-relaxed">
-          At MercatoHub, we take your privacy seriously. This policy outlines how we collect, use, and protect your personal information. We are committed to maintaining the trust and confidence of our users and ensuring that your data is handled with the utmost care and security.
-        </p>
+const SolutionsPage = () => {
+  return (
+    <div className="pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <h1 className="text-6xl font-black text-gray-900 mb-6">Tailored Solutions</h1>
+          <p className="text-2xl text-gray-600">For every stage of your fintech journey</p>
+        </div>
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div className="bg-blue-600 p-14 rounded-[3rem] shadow-2xl text-white">
+            <Building2 className="h-16 w-16 mb-8" />
+            <h3 className="text-4xl font-black mb-6">For Merchants</h3>
+            <p className="text-blue-100 mb-8 font-semibold text-lg">Accept payments with pre-built checkout that converts and stays secure.</p>
+            <ul className="space-y-4">
+              {["No-code payment links", "Subscription billing", "Local payment methods", "Mobile SDKs"].map((f, i) => (
+                <li key={i} className="flex items-center font-bold text-lg">
+                  <CheckCircle2 className="text-blue-200 mr-4 h-6 w-6" /> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-gray-900 p-14 rounded-[3rem] shadow-2xl text-white">
+            <Code2 className="h-16 w-16 mb-8 text-blue-400" />
+            <h3 className="text-4xl font-black mb-6">For Developers</h3>
+            <p className="text-gray-300 mb-8 font-semibold text-lg">Build with clean, powerful APIs and comprehensive documentation.</p>
+            <ul className="space-y-4">
+              {["Sandbox environment", "RESTful APIs", "Webhooks", "SDKs (Go, Python, JS)"].map((f, i) => (
+                <li key={i} className="flex items-center font-bold text-lg">
+                  <CheckCircle2 className="text-blue-400 mr-4 h-6 w-6" /> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AboutPage = () => (
+  <div className="pt-32 pb-24">
+    <div className="max-w-5xl mx-auto px-6">
+      <h1 className="text-7xl font-black text-gray-900 mb-12">Our Mission</h1>
+      <p className="text-3xl text-gray-600 leading-relaxed mb-16 font-semibold">
+        PayNest Systems was founded in Nairobi to remove friction from financial transactions across Africa.
+      </p>
+      <div className="grid md:grid-cols-2 gap-16">
+        <div className="bg-blue-50 p-10 rounded-3xl">
+          <h3 className="text-3xl font-black text-blue-900 mb-6">Reliability First</h3>
+          <p className="text-gray-700 font-bold leading-relaxed text-lg">
+            99.99% uptime backed by geographically redundant infrastructure monitored 24/7.
+          </p>
+        </div>
+        <div className="bg-indigo-50 p-10 rounded-3xl">
+          <h3 className="text-3xl font-black text-indigo-900 mb-6">Compliance Driven</h3>
+          <p className="text-gray-700 font-bold leading-relaxed text-lg">
+            Working with regulators to ensure your business stays compliant with evolving fintech laws.
+          </p>
+        </div>
       </div>
     </div>
   </div>
 );
 
-const ContactPage = () => (
-  <div className="pt-24 pb-20">
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-2xl shadow-lg">
-          <h3 className="text-xl font-bold mb-4">Get in Touch</h3>
-          <div className="space-y-4">
-            <p className="flex items-center text-gray-600">
-              <Mail className="h-5 w-5 mr-3 text-mercato-600" />
-              support@mercatohub.com
-            </p>
-            <p className="flex items-center text-gray-600">
-              <Phone className="h-5 w-5 mr-3 text-mercato-600" />
-              +234 800 MERCATO
-            </p>
-            <p className="flex items-center text-gray-600">
-              <MapPin className="h-5 w-5 mr-3 text-mercato-600" />
-              Lagos, Nigeria
-            </p>
-          </div>
-        </div>
-        <div className="bg-mercato-50 p-8 rounded-2xl">
-          <h3 className="text-xl font-bold mb-4">Business Hours</h3>
-          <p className="text-gray-700 mb-2">Monday - Friday: 8am - 6pm WAT</p>
-          <p className="text-gray-700 mb-2">Saturday: 9am - 2pm WAT</p>
-          <p className="text-gray-700">Sunday: Closed</p>
+const GetStartedPage = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    alert("Welcome to PayNest! Our team will contact you for KYB verification.");
+  };
+
+  return (
+    <div className="pt-32 pb-24 bg-blue-50 min-h-screen">
+      <div className="max-w-3xl mx-auto px-6">
+        <div className="bg-white rounded-[3rem] p-14 shadow-2xl border-2 border-blue-100">
+          <h2 className="text-5xl font-black text-gray-900 mb-10">Open Merchant Account</h2>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <label className="block text-xs font-black uppercase tracking-widest text-gray-700 mb-3">Country</label>
+                <select className="w-full bg-gray-50 border-2 border-gray-200 rounded-2xl px-6 py-4 font-bold focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option>Kenya</option>
+                  <option>Nigeria</option>
+                  <option>Ghana</option>
+                  <option>South Africa</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-black uppercase tracking-widest text-gray-700 mb-3">Monthly Volume</label>
+                <select className="w-full bg-gray-50 border-2 border-gray-200 rounded-2xl px-6 py-4 font-bold focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option>Below $10k</option>
+                  <option>$10k - $100k</option>
+                  <option>Above $100k</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-black uppercase tracking-widest text-gray-700 mb-3">Full Name</label>
+              <input required type="text" className="w-full bg-gray-50 border-2 border-gray-200 rounded-2xl px-6 py-4 font-bold focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe" />
+            </div>
+            <div>
+              <label className="block text-xs font-black uppercase tracking-widest text-gray-700 mb-3">Work Email</label>
+              <input required type="email" className="w-full bg-gray-50 border-2 border-gray-200 rounded-2xl px-6 py-4 font-bold focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="john@company.com" />
+            </div>
+            <button type="submit" className="w-full bg-blue-600 text-white py-6 rounded-2xl font-black text-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+              Submit Application
+            </button>
+          </form>
         </div>
       </div>
+    </div>
+  );
+};
+
+const ContactPage = () => (
+  <div className="pt-32 pb-24">
+    <div className="max-w-4xl mx-auto px-6 text-center">
+      <h1 className="text-6xl font-black text-gray-900 mb-12">Get in Touch</h1>
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="bg-blue-50 p-10 rounded-3xl">
+          <Mail className="h-12 w-12 text-blue-600 mx-auto mb-6" />
+          <h3 className="text-2xl font-black text-gray-900 mb-3">Email Us</h3>
+          <p className="text-lg font-bold text-gray-700">hello@paynest.systems</p>
+        </div>
+        <div className="bg-indigo-50 p-10 rounded-3xl">
+          <MapPin className="h-12 w-12 text-indigo-600 mx-auto mb-6" />
+          <h3 className="text-2xl font-black text-gray-900 mb-3">Visit Us</h3>
+          <p className="text-lg font-bold text-gray-700">Westlands, Nairobi, Kenya</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const PrivacyPage = () => (
+  <div className="pt-32 pb-24">
+    <div className="max-w-4xl mx-auto px-6">
+      <h1 className="text-6xl font-black text-gray-900 mb-8">Privacy Policy</h1>
+      <p className="text-gray-600 text-lg font-semibold">Last updated: February 2026</p>
+      <p className="text-gray-700 text-lg leading-relaxed mt-8">
+        PayNest Systems is committed to protecting your privacy and ensuring the security of your data.
+      </p>
     </div>
   </div>
 );
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen bg-white font-sans text-gray-900 antialiased">
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={
+          <>
+            <Hero />
+            <StatsSection />
+            <FeaturesGrid />
+            <CTASection />
+          </>
+        } />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/solutions" element={<SolutionsPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/get-started" element={<GetStartedPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
       <Footer />
     </div>
