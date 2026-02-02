@@ -52,7 +52,7 @@ const Navbar = () => {
               <ShieldCheck className="h-8 w-8 text-white" />
             </motion.div>
             <div>
-              <span className="text-3xl font-black text-gray-900 tracking-tighter">PayNest</span>
+              <span className="text-3xl font-black text-gray-900 tracking-tighter">KoraWire</span>
               <p className="text-xs text-blue-600 font-bold uppercase tracking-widest">Systems</p>
             </div>
           </Link>
@@ -392,7 +392,7 @@ const Footer = () => {
                 <ShieldCheck className="h-8 w-8 text-white" />
               </div>
               <div>
-                <span className="text-3xl font-black tracking-tighter">PayNest</span>
+                <span className="text-3xl font-black tracking-tighter">KoraWire</span>
                 <p className="text-xs text-blue-400 font-bold uppercase tracking-widest">Systems</p>
               </div>
             </div>
@@ -437,7 +437,7 @@ const Footer = () => {
         </div>
         
         <div className="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-          <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">© 2026 PayNest Systems Kenya</p>
+          <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">© 2026 KoraWire Systems Kenya</p>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             <span className="text-gray-400 text-sm font-bold">All Systems Operational</span>
@@ -526,7 +526,7 @@ const AboutPage = () => (
     <div className="max-w-5xl mx-auto px-6">
       <h1 className="text-7xl font-black text-gray-900 mb-12">Our Mission</h1>
       <p className="text-3xl text-gray-600 leading-relaxed mb-16 font-semibold">
-        PayNest Systems was founded in Nairobi to remove friction from financial transactions across Africa.
+        KoraWire Systems was founded in Nairobi to remove friction from financial transactions across Africa.
       </p>
       <div className="grid md:grid-cols-2 gap-16">
         <div className="bg-blue-50 p-10 rounded-3xl">
@@ -549,7 +549,7 @@ const AboutPage = () => (
 const GetStartedPage = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    alert("Welcome to PayNest! Our team will contact you for KYB verification.");
+    alert("Welcome to KoraWire! Our team will contact you for KYB verification.");
   };
 
   return (
